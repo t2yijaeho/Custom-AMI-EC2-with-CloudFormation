@@ -72,3 +72,13 @@
 
     <img src="https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
 
+
+## 3. Get the Windows Administrator password
+
+1. Get the created AWS EC2 instance ID
+
+    ```bash
+    
+    ```
+
+2. Create a key pair and download private key file
