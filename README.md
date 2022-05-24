@@ -17,3 +17,36 @@
 
 
 ## 2. Create an Amazon EC2
+
+1. Get an AWS CloudFormation stack template body
+
+    ```bash
+    wget https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/raw/matia/Template/EC2-MigVM.yaml
+    ```
+
+
+2. Create an AWS CloudFormation stack
+
+    ```bash
+    aws cloudformation create-stack \
+      --stack-name MigrationVM \
+      --template-body file://./EC2-MigVM.yaml
+    ```
+
+3. AWS CloudFormation returns following output
+
+    ```json
+    {
+    "StackId": "arn:aws:cloudformation:us-abcd-x:123456789012:stack/MigrationVM/b4d0f5e0-d4c2-11ec-9529-06edcc65f112"
+    }
+    ```
+
+4. Monitor the progress by the stack's events in AWS management console
+
+    <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
+
+
+## 3. Install 
+
+1. List the 
+
