@@ -74,7 +74,7 @@ Resources:
       #UserData: String
       #Volumes: 
       #  - Volume
-  MigVM-SecurityGroup:
+  MigVMSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Enable remote desktop access via port 
