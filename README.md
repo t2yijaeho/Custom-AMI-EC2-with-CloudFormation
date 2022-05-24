@@ -24,18 +24,21 @@
     wget https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/raw/matia/Template/EC2-MigVM.yaml
     ```
 
+2. Get your local machine public IP address in the browser
 
-2. Create an AWS CloudFormation stack
-   ***Change <My IP> to your local machine IP***
+    http://checkip.amazonaws.com/
+
+3. Create an AWS CloudFormation stack
+   ***Change <My IP> to your local machine IP address (ParameterValue must be in CIDR notation)***
 
     ```bash
     aws cloudformation create-stack \
       --stack-name MigrationVM \
       --template-body file://./EC2-MigVM.yaml \
-      --parameters ParameterKey=LocalLocation, ParameterValue=<My IP>/32
+      --parameters ParameterKey=LocalLocation,ParameterValue="<My IP>/32"
     ```
 
-3. AWS CloudFormation returns following output
+4. AWS CloudFormation returns following output
 
     ```json
     {
@@ -43,7 +46,7 @@
     }
     ```
 
-4. Monitor the progress by the stack's events in AWS management console
+5. Monitor the progress by the stack's events in AWS management console
 
     <img src="https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
 
