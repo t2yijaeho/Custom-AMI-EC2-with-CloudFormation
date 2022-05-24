@@ -2,14 +2,15 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: >
   MSP T2 Data Migration
   Amazon EC2 Migration Virtual Machine
-LocalLocation:
-  Description: The IP address range that can be used to connect remotely to the EC2 instances
-  Type: String
-  MinLength: 9
-  MaxLength: 18
-  Default: 0.0.0.0/0
-  AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
-  ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+Parameters:
+  LocalLocation:
+    Description: The IP address range that can be used to connect remotely to the EC2 instances
+    Type: String
+    MinLength: 9
+    MaxLength: 18
+    Default: 0.0.0.0/0
+    AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
 Resources:
   MigrationVM:
     Type: AWS::EC2::Instance
