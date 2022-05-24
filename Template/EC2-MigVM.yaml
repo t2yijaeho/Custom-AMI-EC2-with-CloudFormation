@@ -24,6 +24,9 @@ Resources:
       Monitoring: false
       PropagateTagsToVolumeOnCreation: true
       SourceDestCheck: true
+      Tags:
+        - Key: "Name"
+          Value: "Migration VM"
       #AdditionalInfo: String
       #Affinity: String
       #AvailabilityZone: String
