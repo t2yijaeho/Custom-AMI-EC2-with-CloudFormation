@@ -67,8 +67,6 @@ Resources:
       #RamdiskId: String
       #SecurityGroupIds: 
       #  - String
-      #SecurityGroups: 
-      #  - String
       #SsmAssociations: 
       #  - SsmAssociation
       #SubnetId: String
@@ -81,6 +79,7 @@ Resources:
   MigVMSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
+      GroupName: Mig VM SecurityGroup
       GroupDescription: Enable remote desktop access via port 
       SecurityGroupIngress:
       - IpProtocol: tcp
