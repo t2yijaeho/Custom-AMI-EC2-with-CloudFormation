@@ -17,16 +17,17 @@ Resources:
     Properties: 
     # Required Properties
       ImageId: ami-0ea7ce8fffb8234e5
+      InstanceType: c6i.xlarge
+      SecurityGroups: [!Ref 'MigVMSecurityGroup']
+      Tags:
+        - Key: "Name"
+          Value: "Migration VM"
     # Properties
-      InstanceType: c6i.xlarge    
       DisableApiTermination: false
       EbsOptimized: false    
       Monitoring: false
       PropagateTagsToVolumeOnCreation: true
       SourceDestCheck: true
-      Tags:
-        - Key: "Name"
-          Value: "Migration VM"
       #AdditionalInfo: String
       #Affinity: String
       #AvailabilityZone: String
