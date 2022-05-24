@@ -24,6 +24,9 @@ Resources:
       Monitoring: false
       PropagateTagsToVolumeOnCreation: true
       SourceDestCheck: true
+      Tags:
+        - Key: "Name"
+          Value: "Migration VM"
       #AdditionalInfo: String
       #Affinity: String
       #AvailabilityZone: String
@@ -86,13 +89,13 @@ Resources:
 Outputs:
   InstanceId:
     Description: InstanceId of the newly created EC2 instance
-    Value: !Ref 'EC2Instance'
+    Value: !Ref 'MigrationVM'
   PublicDNS:
     Description: Public DNSName of the newly created EC2 instance
-    Value: !GetAtt [EC2Instance, PublicDnsName]
+    Value: !GetAtt [MigrationVM, PublicDnsName]
   PublicIP:
     Description: Public IP address of the newly created EC2 instance
-    Value: !GetAtt [EC2Instance, PublicIp]
+    Value: !GetAtt [MigrationVM, PublicIp]
   PrivateIP:
     Description: Private IP address of the newly created EC2 instance
-    Value: !GetAtt [EC2Instance, PrivateIp]
+    Value: !GetAtt [MigrationVM, PrivateIp]
