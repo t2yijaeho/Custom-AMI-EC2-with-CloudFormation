@@ -26,11 +26,13 @@
 
 
 2. Create an AWS CloudFormation stack
+   ***Change <My IP> to your local machine IP***
 
     ```bash
     aws cloudformation create-stack \
       --stack-name MigrationVM \
-      --template-body file://./EC2-MigVM.yaml
+      --template-body file://./EC2-MigVM.yaml \
+      --parameters ParameterKey=LocalLocation, ParameterValue=<My IP>/32
     ```
 
 3. AWS CloudFormation returns following output
@@ -43,10 +45,5 @@
 
 4. Monitor the progress by the stack's events in AWS management console
 
-    <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
-
-
-## 3. Install 
-
-1. List the 
+    <img src="https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
 
