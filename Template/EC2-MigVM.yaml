@@ -19,7 +19,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties: 
     # Required Properties
-      ImageId:  [!Ref 'CustomImageID']
+      ImageId: !Ref CustomImageID
       InstanceType: c6i.xlarge
       KeyName: MigVMKeyPair
       SecurityGroups: [!Ref 'MigVMSecurityGroup']
