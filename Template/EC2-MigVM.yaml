@@ -18,6 +18,7 @@ Resources:
     # Required Properties
       ImageId: ami-023951732fbf47d38
       InstanceType: c6i.xlarge
+      KeyName: MigVMKeyPair
       SecurityGroups: [!Ref 'MigVMSecurityGroup']
       Tags:
         - Key: "Name"
@@ -53,7 +54,6 @@ Resources:
       #Ipv6Addresses: 
       #  - InstanceIpv6Address
       #KernelId: String
-      #KeyName: String
       #LaunchTemplate: 
       #  LaunchTemplateSpecification
       #LicenseSpecifications: 
