@@ -21,7 +21,6 @@ Resources:
     # Required Properties
       ImageId: !Ref CustomImageID
       InstanceType: c6i.xlarge
-      KeyName: MigVMKeyPair
       SecurityGroups: [!Ref 'MigVMSecurityGroup']
       Tags:
         - Key: "Name"
@@ -32,6 +31,18 @@ Resources:
       Monitoring: false
       PropagateTagsToVolumeOnCreation: true
       SourceDestCheck: true
+      UserData: 
+        Fn::Base64:
+          <powershell>
+          $PrivateIP = (Get-NetIPAddress | Where-Object {$_.AddressState -eq "Preferred" -and $_.ValidLifetime -lt "24:00:00"}).IPAddress
+          $XEPath = "C:\app\Administrator\product\18.0.0\dbhomeXE\network\admin\"
+
+          (Get-Content ($XEPath + "tnsnames.ora")) -Replace '172.31.53.26', $PrivateIP | Set-Content ($XEPath + "tnsnames.ora")
+          (Get-Content ($XEPath + "listener.ora")) -Replace '172.31.53.26', $PrivateIP | Set-Content ($XEPath + "listener.ora")
+
+          start-service OracleServiceXE
+          start-service OracleOraDB18Home1TNSListener
+          </powershell>
       #AdditionalInfo: String
       #Affinity: String
       #AvailabilityZone: String
@@ -57,6 +68,7 @@ Resources:
       #Ipv6Addresses: 
       #  - InstanceIpv6Address
       #KernelId: String
+      #KeyName: String
       #LaunchTemplate: 
       #  LaunchTemplateSpecification
       #LicenseSpecifications: 
