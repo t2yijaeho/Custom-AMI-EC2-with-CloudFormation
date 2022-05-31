@@ -31,6 +31,7 @@
 3. Create an AWS CloudFormation stack
 
     ***Change `<My Custom Image ID>` to your Custom Amazon Machine Image ID***
+    
     ***Change `<My IP>` to your local machine IP address (ParameterValue must be in CIDR notation)***
 
     ```bash
