@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  MSP T2 Data Migration
+  Amazon EC2 Migration Virtual Machine
+Parameters:
+  CustomImageID:
+    Description: The ID of the AMI(Amazon Machine Images) to use for the EC2 instance
+    Type: "AWS::EC2::Image::Id"
+  LocalLocation:
+    Description: The IP address range that can be used to connect remotely to the EC2 instances
+    Type: String
+    MinLength: 9
+    MaxLength: 18
+    Default: 0.0.0.0/0
+    AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+Resources:
+  MigrationVM:
+    Type: AWS::EC2::Instance
+    Properties:
+      LaunchTemplate: MigLaunchTemplate
+      SecurityGroups: [!Ref 'MigLTSecurityGroup']      
+  MigLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: MigLaunchTemplate
+      LaunchTemplateData:
+        ImageId: !Ref CustomImageID
+        InstanceMarketOptions:
+          MarketType: spot
+        InstanceType: c6i.xlarge
+
+        UserData: 
+          Fn::Base64:
+            !Sub |
+              <powershell>
+              $PrivateIP = (Get-NetIPAddress | Where-Object {$_.AddressState -eq "Preferred" -and $_.ValidLifetime -lt "24:00:00"}).IPAddress
+              $XEPath = "C:\app\Administrator\product\18.0.0\dbhomeXE\network\admin\"
+
+              (Get-Content ($XEPath + "tnsnames.ora")) -Replace "172.31.53.26", $PrivateIP | Set-Content ($XEPath + "tnsnames.ora")
+              (Get-Content ($XEPath + "listener.ora")) -Replace "172.31.53.26", $PrivateIP | Set-Content ($XEPath + "listener.ora")
+
+              Restart-Service -Name OracleServiceXE
+              Restart-Service -Name OracleOraDB18Home1TNSListener
+              Restart-Service -Name OracleOraDB18Home1MTSRecoveryService
+              </powershell>      
+      TagSpecifications:
+      - ResourceType: instance
+        Tags:
+        - Key: "Name"
+          Value: "Data Migration VM"
+      VersionDescription: v1
+  MigVMSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: Mig LT SecurityGroup
+      GroupDescription: Enable remote desktop access via RDP(3389)
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 3389
+        ToPort: 3389
+        CidrIp: !Ref 'LocalLocation'
+Outputs:
+  InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value: !Ref 'MigrationVM'
+  PublicDNS1:
+    Description: Public DNSName of the newly created EC2 instance
+    Value: !GetAtt 
+  PublicDNS:
+    Description: Public DNSName of the newly created EC2 instance
+    Value: !GetAtt [MigrationVM, PublicDnsName]
+  PublicIP:
+    Description: Public IP address of the newly created EC2 instance
+    Value: !GetAtt [MigrationVM, PublicIp]
+  PrivateIP:
+    Description: Private IP address of the newly created EC2 instance
+    Value: !GetAtt [MigrationVM, PrivateIp]
