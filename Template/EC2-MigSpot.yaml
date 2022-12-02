@@ -22,6 +22,9 @@ Resources:
         LaunchTemplateName: MigLaunchTemplate
         Version: !GetAtt MigLaunchTemplate.LatestVersionNumber
       SecurityGroups: [!Ref 'MigVMSecurityGroup']
+      Tags:
+        - Key: "Name"
+          Value: "Data Migration Spot VM"
   MigLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
@@ -44,11 +47,6 @@ Resources:
             Restart-Service -Name OracleOraDB18Home1TNSListener
             Restart-Service -Name OracleOraDB18Home1MTSRecoveryService
             </powershell>      
-      TagSpecifications:
-      - ResourceType: instance
-        Tags:
-        - Key: "Name"
-          Value: "Data Migration Spot VM"
       VersionDescription: v1
   MigVMSecurityGroup:
     Type: AWS::EC2::SecurityGroup
