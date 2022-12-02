@@ -21,7 +21,7 @@ Resources:
       LaunchTemplate:
         LaunchTemplateName: MigLaunchTemplate
         Version: !GetAtt MigLaunchTemplate.LatestVersionNumber
-      SecurityGroups: [!Ref 'MigSecurityGroup']
+      SecurityGroups: [!Ref 'MigVMSecurityGroup']
   MigLaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     Properties:
@@ -53,7 +53,7 @@ Resources:
   MigVMSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: Mig SecurityGroup
+      GroupName: Mig VM SecurityGroup
       GroupDescription: Enable remote desktop access via RDP(3389)
       SecurityGroupIngress:
       - IpProtocol: tcp
