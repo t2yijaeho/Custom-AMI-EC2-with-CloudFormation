@@ -33,6 +33,8 @@ Resources:
         ImageId: !Ref CustomImageID
         InstanceMarketOptions:
           MarketType: spot
+        HibernationOptions:
+          Configured: true
         InstanceType: c6i.xlarge
         UserData:
           Fn::Base64: !Sub |
