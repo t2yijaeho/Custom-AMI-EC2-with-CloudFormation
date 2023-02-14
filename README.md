@@ -13,6 +13,12 @@
 wget https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/raw/matia/Template/EC2-MigVM.yaml
 ```
 
+* For Spot instance
+
+```bash
+wget https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/raw/matia/Template/EC2-MigSpot.yaml
+```
+
 ### 2. Get your local machine public IP address in the browser
 
 * [Your public IP address](http://checkip.amazonaws.com/)
@@ -27,6 +33,14 @@ wget https://github.com/t2yijaeho/Custom-AMI-EC2-with-CloudFormation/raw/matia/T
 aws cloudformation create-stack \
     --stack-name MigrationVM \
     --template-body file://./EC2-MigVM.yaml \
+    --parameters ParameterKey=CustomImageID,ParameterValue="<My Custom Image ID>" \
+    ParameterKey=LocalLocation,ParameterValue="<My IP>/32"
+```
+
+```bash
+aws cloudformation create-stack \
+    --stack-name MigrationVM \
+    --template-body file://./EC2-MigSpot.yaml \
     --parameters ParameterKey=CustomImageID,ParameterValue="<My Custom Image ID>" \
     ParameterKey=LocalLocation,ParameterValue="<My IP>/32"
 ```
